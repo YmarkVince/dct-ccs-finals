@@ -46,4 +46,36 @@
         closeCon($conn);
         return false;
     }
+
+    function addUser() {
+        $conn = openCon();
+    
+        if ($conn) {
+            
+            $email = 'user2@gmail.com'; 
+            $password = 'password'; 
+            $name = 'user2'; /
+            
+            
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    
+            
+            $sql = "INSERT INTO users (email, password, name) VALUES (?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("sss", $email, $hashedPassword, $name);
+    
+           
+            if ($stmt->execute()) {
+                echo "New record created successfully";
+            } else {
+                echo "Error: " . $stmt->error;
+            }
+    
+           
+            $stmt->close();
+            closeCon($conn);
+        } else {
+            echo "Failed to connect to the database.";
+        }
+    }
 ?>
