@@ -1,25 +1,25 @@
 <?php
 
-include('functions.php'); 
+include('functions.php');
 
 
 $error_message = '';
 
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
+if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    
+
     if (loginUser($email, $password)) {
-      
+   
         header("Location: ./admin/dashboard.php");
         exit();
     } else {
-       
+      
         $error_message = 'Invalid email or password.';
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -35,22 +35,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
 <body class="bg-secondary-subtle">
     <div class="d-flex align-items-center justify-content-center vh-100">
         <div class="col-3">
-           
-            <?php if (!empty($error_message)): ?>
+    
+            <?php if ($error_message): ?>
                 <div class="alert alert-danger" role="alert">
-                    <?php echo htmlspecialchars($error_message); ?>
+                    <?php echo $error_message; ?>
                 </div>
             <?php endif; ?>
             <div class="card">
                 <div class="card-body">
                     <h1 class="h3 mb-4 fw-normal">Login</h1>
-                    <form method="POST" action="">
+                    <form method="post" action="">
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="user1@example.com" required>
+                            <input type="text" class="form-control" id="email" name="email" placeholder="user1@example.com" >
                             <label for="email">Email address</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" >
                             <label for="password">Password</label>
                         </div>
                         <div class="form-floating mb-3">
